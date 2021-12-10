@@ -1,9 +1,8 @@
 <template>
-	<div class="container mt-5">
-		<div v-for="(post, index) in posts" :key="index" class="card">
+	<div class="container mt-4">
+		<div v-for="post in posts" :key="post._id" class="card">
 			<div class="card-body">
-				<div class="card-title">{{ post.title }}</div>
-				<div class="card-text">{{ post.content }}</div>
+				<router-link :to="`/post/${post._id}`" class="card-title">{{ post.title }}</router-link>
 			</div>
 		</div>
 	</div>
@@ -11,19 +10,30 @@
 
 <script>
 	import axios from 'axios'
-	import { ref } from 'vue'
+	import { useStore } from 'vuex'
+	import { computed } from 'vue'
 
 	export default {
 		name: 'Post',
 		setup() {
-			const posts = ref([]);
-			axios.get('/api/post').then(({ data }) => {
-				console.log(data);
-				posts.value = data;
+			const store = useStore();
+			const posts = computed(() => {
+				return store.getters.posts;
 			});
 
+			const getPosts = () => {
+				axios.get('/api/post')
+					.then(({ data }) => {
+						console.log(data);
+						store.state.posts = data;
+					});
+			}
+
+			getPosts();
+
 			return {
-				posts
+				posts,
+				getPosts
 			}
 		}
 	}
