@@ -18,7 +18,6 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
 	try {
 		const posts = await PostModel.find();
-		console.log(posts);
 		res.send(posts);
 	} catch (err) {
 		console.log(err);
@@ -42,8 +41,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
 	try {
 		const id = req.params.id;
-		await PostModel.findByIdAndUpdate(id, req.body, { new: true });
-		res.redirect('/post');
+		await PostModel.findByIdAndUpdate(id, { title: req.body.title, content: req.body.content });
 	} catch (err) {
 		console.log(err);
 		res.status(400).send(err);

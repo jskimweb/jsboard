@@ -1,15 +1,15 @@
 <template>
 	<div class="container mt-4">
-		<form action="/api/post" method="POST">
+		<form @submit.prevent="updateOnePost">
 			<div class="form-group">
 				<label for="title">제목</label>
-				<input type="text" class="form-control" name="title" :value="post.title">
+				<input v-model="inputTitle" type="text" class="form-control" name="title">
 			</div>
 			<div class="form-group">
 				<label for="content">내용</label>
-				<textarea class="form-control" name="content" rows="5" :value="post.content"></textarea>
+				<textarea v-model="inputContent" class="form-control" name="content" rows="5"></textarea>
 			</div>
-			<button type="submit" class="btn btn-primary float-right">작성</button>
+			<button class="btn btn-primary float-right">수정</button>
 		</form>
 	</div>
 </template>
@@ -33,7 +33,7 @@
 			const inputContent = ref('');
 
 			const updateOnePost = async () => {
-				axios.put(`/api/post/${route.params.id}`, { title: post.value.title, content: post.value.content })
+				await axios.put(`/api/post/${route.params.id}`, { title: inputTitle.value, content: inputContent.value })
 					.then(router.push(`/post`));
 			}
 

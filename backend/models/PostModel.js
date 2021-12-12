@@ -9,8 +9,8 @@ const postSchema = new mongoose.Schema({
 	},
 	content: {
 		type: String,
-		trim: true,
-		required: true
+		required: true,
+		trim: true
 	}
 }, {
 	versionKey: false
