@@ -1,6 +1,6 @@
 <template>
-	<div class="container mt-5">
-		<h1>메인 페이지입니다.</h1>
+	<div class="container mt-4">
+		<h1 class="text-center">JS Board</h1>
 	</div>
 </template>
 

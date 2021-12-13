@@ -4,6 +4,7 @@ import Post from '@/views/Post'
 import PostDetail from '@/views/PostDetail'
 import Write from '@/views/Write'
 import Edit from '@/views/Edit'
+import store from '@/store/store'
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -16,12 +17,26 @@ const router = createRouter({
 		{
 			path: '/post',
 			name: 'Post',
-			component: Post
+			component: Post,
+			beforeEnter: (to, from, next) => {
+				store.dispatch('getPosts').then(() => {
+					next();
+				}).catch(err => {
+					console.log(err);
+				});
+			}
 		},
 		{
 			path: '/post/:id',
 			name: 'PostDetail',
-			component: PostDetail
+			component: PostDetail,
+			beforeEnter: (to, from, next) => {
+				store.dispatch('getPost', to.params.id).then(() => {
+					next();
+				}).catch(err => {
+					console.log(err);
+				});
+			}
 		},
 		{
 			path: '/write',

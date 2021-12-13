@@ -1,52 +1,53 @@
 <template>
 	<div class="container mt-4">
-		<h3>{{ post.title }}</h3>
-		<p>{{ post.content }}</p>
-		<button @click="deleteOnePost" type="button" class="btn btn-danger float-right ml-2">삭제</button>
-		<button @click="$router.push(`/edit/${$route.params.id}`)" type="button" class="btn btn-secondary float-right">수정</button>
+		<div class="post-contents mb-3">
+			<h3>{{ post.title }}</h3>
+			<p class="mt-3 mb-4">{{ post.content }}</p>
+		</div>
+		<div class="button-group d-flex justify-content-end">
+			<button @click="moveToEdit" type="button" class="btn btn-primary mr-2">수정</button>
+			<button @click="deletePost" type="button" class="btn btn-secondary">삭제</button>
+		</div>
 	</div>
 </template>
 
 <script>
-	import axios from 'axios'
-	import { useRoute } from 'vue-router'
-	import { useStore } from 'vuex'
 	import { computed } from 'vue'
+	import { useStore } from 'vuex'
+	import { useRoute } from 'vue-router'
 	import router from '@/router/router'
+	import axios from 'axios'
 
 	export default {
 		name: 'PostDetail',
 		setup() {
-			const route = useRoute();
 			const store = useStore();
+			const route = useRoute();
 			const post = computed(() => {
 				return store.getters.post
 			});
 
-			const getOnePost = async () => {
-				await axios.get(`/api/post/${route.params.id}`)
-					.then(({ data }) => {
-						console.log(data);
-						store.state.post = data;
-					});
+			const moveToEdit = () => {
+				router.push(`/edit/${route.params.id}`);
 			}
 
-			const deleteOnePost = async () => {
-				await axios.delete(`/api/post/${route.params.id}`)
+			const deletePost = async () => {
+				const postId = route.params.id;
+				await axios.delete(`/api/post/${postId}`)
 					.then(router.push('/post'));
 			}
 
-			getOnePost();
-
 			return {
 				post,
-				getOnePost,
-				deleteOnePost
+				moveToEdit,
+				deletePost
 			}
 		}
 	}
 </script>
 
 <style scoped>
-
+	.post-contents {
+		border-bottom: .1rem solid rgba(0, 0, 0, .125);
+	}
 </style>

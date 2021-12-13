@@ -5,9 +5,8 @@ const PostModel = require('../models/PostModel');
 // Create a post
 router.post('/', async (req, res) => {
 	try {
-		const post = new PostModel(req.body);
+		const post = await new PostModel(req.body);
 		await post.save();
-		res.redirect('/post');
 	} catch (err) {
 		console.log(err);
 		res.status(400).send(err);
@@ -41,7 +40,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
 	try {
 		const id = req.params.id;
-		await PostModel.findByIdAndUpdate(id, { title: req.body.title, content: req.body.content });
+		await PostModel.findByIdAndUpdate(id, req.body);
 	} catch (err) {
 		console.log(err);
 		res.status(400).send(err);

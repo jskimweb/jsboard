@@ -1,25 +1,26 @@
 <template>
 	<div class="container mt-4">
-		<form @submit.prevent="updateOnePost">
-			<div class="form-group">
-				<label for="title">제목</label>
-				<input v-model="inputTitle" type="text" class="form-control" name="title">
-			</div>
+		<form @submit.prevent="updatePost">
+			<Input :inputTitle="postData.title" @update:inputTitle="postData.title = $event"></Input>
 			<div class="form-group">
 				<label for="content">내용</label>
-				<textarea v-model="inputContent" class="form-control" name="content" rows="5"></textarea>
+				<textarea v-model="postData.content" class="form-control" name="content" rows="5"></textarea>
 			</div>
-			<button class="btn btn-primary float-right">수정</button>
+			<div class="form-group d-flex justify-content-end">
+				<button type="submit" class="btn btn-primary mr-2">수정</button>
+				<button @click="$router.go(-1)" type="button" class="btn btn-secondary">취소</button>
+			</div>
 		</form>
 	</div>
 </template>
 
 <script>
-	import axios from 'axios'
+	import { computed, ref } from 'vue'
 	import { useStore } from 'vuex'
 	import { useRoute } from 'vue-router'
-	import { computed, ref } from 'vue'
+	import axios from 'axios'
 	import router from '@/router/router'
+	import Input from '@/components/Input'
 
 	export default {
 		name: 'Edit',
@@ -28,21 +29,26 @@
 			const route = useRoute();
 			const post = computed(() => {
 				return store.getters.post
+			})
+			const postData = ref({
+				title: post.value.title,
+				content: post.value.content
 			});
-			const inputTitle = ref('');
-			const inputContent = ref('');
 
-			const updateOnePost = async () => {
-				await axios.put(`/api/post/${route.params.id}`, { title: inputTitle.value, content: inputContent.value })
-					.then(router.push(`/post`));
+			const updatePost = async () => {
+				const postId = route.params.id;
+				await axios.put(`/api/post/${postId}`, postData.value)
+					.then(router.push('/post'));
 			}
 
 			return {
 				post,
-				inputTitle,
-				inputContent,
-				updateOnePost
+				postData,
+				updatePost
 			}
+		},
+		components: {
+			Input
 		}
 	}
 </script>

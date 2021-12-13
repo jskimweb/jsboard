@@ -9,9 +9,8 @@
 </template>
 
 <script>
-	import axios from 'axios'
-	import { useStore } from 'vuex'
 	import { computed } from 'vue'
+	import { useStore } from 'vuex'
 
 	export default {
 		name: 'Post',
@@ -21,19 +20,8 @@
 				return store.getters.posts;
 			});
 
-			const getPosts = () => {
-				axios.get('/api/post')
-					.then(({ data }) => {
-						console.log(data);
-						store.state.posts = data;
-					});
-			}
-
-			getPosts();
-
 			return {
-				posts,
-				getPosts
+				posts
 			}
 		}
 	}
