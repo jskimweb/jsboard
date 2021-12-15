@@ -19,7 +19,7 @@ const router = createRouter({
 			name: 'Post',
 			component: Post,
 			beforeEnter: (to, from, next) => {
-				store.dispatch('getPosts').then(() => {
+				store.dispatch('GET_POSTS').then(() => {
 					next();
 				}).catch(err => {
 					console.log(err);
@@ -31,7 +31,7 @@ const router = createRouter({
 			name: 'PostDetail',
 			component: PostDetail,
 			beforeEnter: (to, from, next) => {
-				store.dispatch('getPost', to.params.id).then(() => {
+				store.dispatch('GET_POST', to.params.id).then(() => {
 					next();
 				}).catch(err => {
 					console.log(err);

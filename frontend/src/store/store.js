@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import axios from 'axios'
+import { getPosts, getPost } from '@/api/api';
 
 const store = createStore({
 	state: {
@@ -15,21 +15,21 @@ const store = createStore({
 		}
 	},
 	mutations: {
-		setPosts(state, payload) {
+		SET_POSTS(state, payload) {
 			state.posts = payload;
 		},
-		setPost(state, payload) {
+		SET_POST(state, payload) {
 			state.post = payload;
 		}
 	},
 	actions: {
-		async getPosts({ commit }) {
-			const { data } = await axios.get('/api/post');
-			commit('setPosts', data);
+		async GET_POSTS({ commit }) {
+			const { data } = await getPosts();
+			commit('SET_POSTS', data);
 		},
-		async getPost({ commit }, postId) {
-			const { data } = await axios.get(`/api/post/${postId}`);
-			commit('setPost', data);
+		async GET_POST({ commit }, postId) {
+			const { data } = await getPost(postId);
+			commit('SET_POST', data);
 		}
 	}
 });

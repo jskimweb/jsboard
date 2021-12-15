@@ -5,8 +5,8 @@
 			<p class="mt-3 mb-4">{{ post.content }}</p>
 		</div>
 		<div class="button-group d-flex justify-content-end">
-			<button @click="moveToEdit" type="button" class="btn btn-primary mr-2">수정</button>
-			<button @click="deletePost" type="button" class="btn btn-secondary">삭제</button>
+			<button @click="clickEdit" type="button" class="btn btn-primary mr-2">수정</button>
+			<button @click="clickDelete" type="button" class="btn btn-secondary">삭제</button>
 		</div>
 	</div>
 </template>
@@ -15,8 +15,8 @@
 	import { computed } from 'vue'
 	import { useStore } from 'vuex'
 	import { useRoute } from 'vue-router'
+	import { deletePost } from '@/api/api'
 	import router from '@/router/router'
-	import axios from 'axios'
 
 	export default {
 		name: 'PostDetail',
@@ -27,20 +27,24 @@
 				return store.getters.post
 			});
 
-			const moveToEdit = () => {
+			const clickEdit = () => {
 				router.push(`/edit/${route.params.id}`);
 			}
 
-			const deletePost = async () => {
-				const postId = route.params.id;
-				await axios.delete(`/api/post/${postId}`)
-					.then(router.push('/post'));
+			const clickDelete = async () => {
+				try {
+					const postId = route.params.id;
+					await deletePost(postId)
+						.then(router.push('/post'));
+				} catch (err) {
+					console.log(err)
+				}
 			}
 
 			return {
 				post,
-				moveToEdit,
-				deletePost
+				clickEdit,
+				clickDelete
 			}
 		}
 	}

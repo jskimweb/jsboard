@@ -1,6 +1,6 @@
 <template>
 	<div class="container mt-4">
-		<form @submit.prevent="updatePost">
+		<form @submit.prevent="submitForm">
 			<Input :inputTitle="postData.title" @update:inputTitle="postData.title = $event"></Input>
 			<div class="form-group">
 				<label for="content">내용</label>
@@ -18,7 +18,7 @@
 	import { computed, ref } from 'vue'
 	import { useStore } from 'vuex'
 	import { useRoute } from 'vue-router'
-	import axios from 'axios'
+	import { updatePost } from '@/api/api'
 	import router from '@/router/router'
 	import Input from '@/components/Input'
 
@@ -35,16 +35,20 @@
 				content: post.value.content
 			});
 
-			const updatePost = async () => {
-				const postId = route.params.id;
-				await axios.put(`/api/post/${postId}`, postData.value)
-					.then(router.push('/post'));
+			const submitForm = async () => {
+				try {
+					const postId = route.params.id;
+					await updatePost(postId, postData.value)
+						.then(router.push('/post'));
+				} catch (err) {
+					console.log(err)
+				}
 			}
 
 			return {
 				post,
 				postData,
-				updatePost
+				submitForm
 			}
 		},
 		components: {

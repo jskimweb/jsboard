@@ -11,7 +11,6 @@
 		props: ['inputTitle'],
 		setup(props, { emit }) {
 			const onInput = (event) => {
-				// console.log(event.target.value);
 				emit('update:inputTitle', event.target.value);
 			}
 

@@ -1,6 +1,6 @@
 <template>
 	<div class="container mt-4">
-		<form @submit.prevent="createPost">
+		<form @submit.prevent="submitForm">
 			<div class="form-group">
 				<label for="title">제목</label>
 				<input v-model="postData.title" type="text" class="form-control" id="title" name="title">
@@ -19,7 +19,7 @@
 
 <script>
 	import { ref } from 'vue'
-	import axios from 'axios'
+	import { createPost } from '@/api/api'
 	import router from '@/router/router'
 
 	export default {
@@ -29,15 +29,18 @@
 				title: '',
 				content: ''
 			});
-
-			const createPost = async () => {
-				await axios.post('/api/post', postData.value)
-					.then(router.push('/post'));
+			const submitForm = async () => {
+				try {
+					await createPost(postData.value)
+						.then(router.push('/post'));
+				} catch (err) {
+					console.log(err)
+				}
 			}
-			
+		
 			return {
 				postData,
-				createPost
+				submitForm
 			}
 		}
 	}
