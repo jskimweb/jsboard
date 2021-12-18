@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '@/views/Home'
 import Post from '@/views/Post'
 import PostDetail from '@/views/PostDetail'
 import Write from '@/views/Write'
 import Edit from '@/views/Edit'
+import Search from '@/views/Search'
 import store from '@/store/store'
 
 const router = createRouter({
@@ -12,7 +12,7 @@ const router = createRouter({
 		{
 			path: '/',
 			name: 'Home',
-			component: Home
+			redirect: '/post'
 		},
 		{
 			path: '/post',
@@ -47,6 +47,11 @@ const router = createRouter({
 			path: '/edit/:id',
 			name: 'Edit',
 			component: Edit
+		},
+		{
+			path: '/search',
+			name: 'Search',
+			component: Search
 		}
 	]
 });

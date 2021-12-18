@@ -1,5 +1,6 @@
 <template>
 	<div class="container mt-4">
+		<h4 class="text-center mb-3">새 게시글 작성</h4>
 		<form @submit.prevent="submitForm">
 			<div class="form-group">
 				<label for="title">제목</label>
@@ -11,7 +12,7 @@
 			</div>
 			<div class="button-group d-flex justify-content-end">
 				<button type="submit" class="btn btn-primary mr-2">작성</button>
-				<button @click="$router.go(-1)" type="button" class="btn btn-secondary">취소</button>
+				<button @click="clickCancel" type="button" class="btn btn-secondary">취소</button>
 			</div>
 		</form>
 	</div>
@@ -29,6 +30,7 @@
 				title: '',
 				content: ''
 			});
+
 			const submitForm = async () => {
 				try {
 					await createPost(postData.value)
@@ -37,10 +39,14 @@
 					console.log(err)
 				}
 			}
+			const clickCancel = () => {
+				router.push('/post')
+			}
 		
 			return {
 				postData,
-				submitForm
+				submitForm,
+				clickCancel
 			}
 		}
 	}

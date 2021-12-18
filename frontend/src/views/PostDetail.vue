@@ -1,12 +1,13 @@
 <template>
 	<div class="container mt-4">
-		<div class="post-contents mb-3">
+		<div class="post-contents">
 			<h3>{{ post.title }}</h3>
 			<p class="mt-3 mb-4">{{ post.content }}</p>
 		</div>
-		<div class="button-group d-flex justify-content-end">
-			<button @click="clickEdit" type="button" class="btn btn-primary mr-2">수정</button>
-			<button @click="clickDelete" type="button" class="btn btn-secondary">삭제</button>
+		<div class="button-group d-flex justify-content-end mt-3">
+			<button @click="clickEdit" class="btn btn-success mr-2">수정</button>
+			<button @click="clickDelete" type="button" class="btn btn-danger mr-2">삭제</button>
+			<button @click="clickList" type="button" class="btn btn-light">목록으로</button>
 		</div>
 	</div>
 </template>
@@ -28,9 +29,8 @@
 			});
 
 			const clickEdit = () => {
-				router.push(`/edit/${route.params.id}`);
+				router.push(`/edit/${route.params.id}`)
 			}
-
 			const clickDelete = async () => {
 				try {
 					const postId = route.params.id;
@@ -40,11 +40,15 @@
 					console.log(err)
 				}
 			}
+			const clickList = () => {
+				router.push('/post')
+			}
 
 			return {
 				post,
 				clickEdit,
-				clickDelete
+				clickDelete,
+				clickList
 			}
 		}
 	}
