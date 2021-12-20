@@ -6,6 +6,7 @@
 				<router-link :to="`/post/${post._id}`" class="card-title">{{ post.title }}</router-link>
 			</div>
 		</div>
+		<p v-if="posts == ''" class="text-center">검색 결과가 없습니다.</p>
 		<div class="button-group d-flex justify-content-end mt-3">
 			<button @click="clickList" type="button" class="btn btn-light">목록으로</button>
 		</div>

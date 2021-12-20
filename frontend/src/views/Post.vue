@@ -29,7 +29,7 @@
 			const searchText = ref('');
 
 			const submitForm = async () => {
-				const { data } = await axios.post('/api/search', {title: searchText.value});
+				const { data } = await axios.post('/api/search', { title: searchText.value });
 				await store.commit('SET_POSTS', data);
 				router.push('/search');
 			}
