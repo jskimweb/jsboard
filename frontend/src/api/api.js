@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-async function getPosts() {
+async function getPosts(page) {
 	try {
-		return await axios.get('/api/post')
+		return await axios.get('/api/post', page)
 	} catch (err) {
 		console.log(err)
 	}
@@ -40,10 +40,19 @@ async function updatePost(postId, postData) {
 		}
 }
 
+async function searchPosts(searchText) {
+	try {
+		return await axios.post('/api/search', { title: searchText })
+	} catch (err) {
+		console.log(err)
+	}
+}
+
 export {
 	getPosts,
 	getPost,
 	createPost,
 	deletePost,
-	updatePost
+	updatePost,
+	searchPosts
 }

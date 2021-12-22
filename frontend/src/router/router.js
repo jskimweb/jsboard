@@ -11,7 +11,6 @@ const router = createRouter({
 	routes: [
 		{
 			path: '/',
-			name: 'Home',
 			redirect: '/post'
 		},
 		{
@@ -19,7 +18,9 @@ const router = createRouter({
 			name: 'Post',
 			component: Post,
 			beforeEnter: (to, from, next) => {
+				store.commit('startSpinner');
 				store.dispatch('GET_POSTS').then(() => {
+					store.commit('endSpinner');
 					next();
 				}).catch(err => {
 					console.log(err);
@@ -31,7 +32,9 @@ const router = createRouter({
 			name: 'PostDetail',
 			component: PostDetail,
 			beforeEnter: (to, from, next) => {
+				store.commit('startSpinner');
 				store.dispatch('GET_POST', to.params.id).then(() => {
+					store.commit('endSpinner');
 					next();
 				}).catch(err => {
 					console.log(err);

@@ -1,10 +1,12 @@
 import { createStore } from 'vuex'
-import { getPosts, getPost } from '@/api/api';
+import { getPosts, getPost, searchPosts } from '@/api/api';
 
 const store = createStore({
 	state: {
 		posts: [],
-		post: {}
+		post: {},
+		page: 1,
+		loadingStatus: false
 	},
 	getters: {
 		posts(state) {
@@ -12,6 +14,9 @@ const store = createStore({
 		},
 		post(state) {
 			return state.post
+		},
+		loadingStatus(state) {
+			return state.loadingStatus
 		}
 	},
 	mutations: {
@@ -20,6 +25,12 @@ const store = createStore({
 		},
 		SET_POST(state, payload) {
 			state.post = payload;
+		},
+		startSpinner(state) {
+			state.loadingStatus = true;
+		},
+		endSpinner(state) {
+			state.loadingStatus = false;
 		}
 	},
 	actions: {
@@ -30,6 +41,10 @@ const store = createStore({
 		async GET_POST({ commit }, postId) {
 			const { data } = await getPost(postId);
 			commit('SET_POST', data);
+		},
+		async SEARCH_POSTS({ commit }, searchText) {
+			const { data } = await searchPosts(searchText);
+			commit('SET_POSTS', data);
 		}
 	}
 });

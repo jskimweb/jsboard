@@ -16,7 +16,10 @@ router.post('/', async (req, res) => {
 // Read posts
 router.get('/', async (req, res) => {
 	try {
-		const posts = await PostModel.find();
+		const page = 1;
+		const limitPosts = 100;
+		const skipPosts = (page - 1) * limitPosts;
+		const posts = await PostModel.find().sort({ id: -1 }).skip(skipPosts).limit(limitPosts);
 		res.send(posts);
 	} catch (err) {
 		console.log(err);
@@ -27,8 +30,8 @@ router.get('/', async (req, res) => {
 // Read a post
 router.get('/:id', async (req, res) => {
 	try {
-		const id = req.params.id;
-		const post = await PostModel.findById(id);
+		const postId = req.params.id;
+		const post = await PostModel.findOne({ id: postId });
 		await res.send(post);
 	} catch (err) {
 		console.log(err);
@@ -39,8 +42,8 @@ router.get('/:id', async (req, res) => {
 // Update a post
 router.put('/:id', async (req, res) => {
 	try {
-		const id = req.params.id;
-		await PostModel.findByIdAndUpdate(id, req.body);
+		const postId = req.params.id;
+		await PostModel.findOneAndUpdate({ id: postId }, req.body);
 	} catch (err) {
 		console.log(err);
 		res.status(400).send(err);
@@ -50,8 +53,8 @@ router.put('/:id', async (req, res) => {
 // Delete a post
 router.delete('/:id', async (req, res) => {
 	try {
-		const id = req.params.id;
-		await PostModel.findByIdAndDelete(id);
+		const postId = req.params.id;
+		await PostModel.findOneAndDelete({ id: postId });
 	} catch (err) {
 		console.log(err);
 		res.status(500).send(err);
