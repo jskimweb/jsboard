@@ -1,9 +1,9 @@
 <template>
 	<div class="container mt-4 mb-4">
 		<form @submit.prevent="submitForm" class="form-group d-flex mb-4">
-				<input v-model="searchText" type="text" class="form-control" id="search" name="search" placeholder="검색어를 입력해주세요.">
-				<button type="submit" class="btn btn-success ml-2" style="white-space: nowrap;">검색</button>
-				<button @click="clickWrite" type="button" class="btn btn-primary ml-2" style="white-space: nowrap;">작성</button>
+			<input v-model="searchText" type="text" class="form-control" id="search" name="search" placeholder="검색어를 입력해주세요.">
+			<button type="submit" class="btn btn-success ml-2" style="white-space: nowrap;">검색</button>
+			<button @click="clickWrite" type="button" class="btn btn-primary ml-2" style="white-space: nowrap;">작성</button>
 		</form>
 		<div class="category mb-3 pt-1 pb-1">
 			<span class="ml-2 text-align-center">글번호</span>
@@ -17,6 +17,21 @@
 				<span class="float-right">{{ post.createdAt }}</span>
 			</div>
 		</div>
+		<ul class="pagination justify-content-center mt-3">
+			<li :class="{'disabled': currentPage === 1}" class="page-item" style="cursor: pointer">
+				<span @click="movePage(currentPage - 1)" class="page-link">
+					<span aria-hidden="true">&laquo;</span>
+				</span>
+			</li>
+			<li v-for="(page, index) in totalPages" :key="index" :class="{'active': currentPage === index + 1}" class="page-item" style="cursor: pointer">
+				<span @click="movePage(index + 1)" class="page-link">{{ index + 1 }}</span>
+			</li>
+			<li :class="{'disabled': currentPage === totalPages}" class="page-item" style="cursor: pointer">
+				<span @click="movePage(currentPage + 1)" class="page-link">
+					<span aria-hidden="true">&raquo;</span>
+				</span>
+			</li>
+		</ul>
 	</div>
 </template>
 
@@ -32,21 +47,41 @@
 			const posts = computed(() => {
 				return store.getters.posts
 			});
+			const currentPage = computed(() => {
+				return store.state.currentPage
+			});
+			const totalPages = computed(() => {
+				return store.state.totalPages
+			});
 			const searchText = ref('');
 
 			const submitForm = async () => {
-				await store.dispatch('SEARCH_POSTS', searchText.value)
-					.then(router.push('/search'));
+				if (searchText.value.trim() == '') {
+					alert('검색어를 입력해주세요.')
+				} else {
+					await store.dispatch('SEARCH_POSTS', searchText.value)
+						.then(router.push('/search'));
+				}
 			}
 			const clickWrite = () => {
 				router.push('/write');
 			}
+			const movePage = async page => {
+				store.state.currentPage = page;
+				await store.commit('startSpinner');
+				await store.dispatch('GET_POSTS', store.state.currentPage).then(() => {
+					store.commit('endSpinner')
+				});
+			}
 
 			return {
 				posts,
+				currentPage,
+				totalPages,
 				searchText,
 				submitForm,
-				clickWrite
+				clickWrite,
+				movePage
 			}
 		}
 	}

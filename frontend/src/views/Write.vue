@@ -33,8 +33,12 @@
 
 			const submitForm = async () => {
 				try {
-					await createPost(postData.value)
-						.then(router.push('/post'));
+					if (postData.value.title.trim() == '' || postData.value.content.trim() == '') {
+						alert('제목과 내용을 모두 입력해주세요.')
+					} else {
+						await createPost(postData.value)
+							.then(router.push('/post'));
+					}
 				} catch (err) {
 					console.log(err)
 				}

@@ -1,8 +1,10 @@
 <template>
 	<div class="container mt-4">
 		<div class="post-contents">
-			<span>글번호 : {{ post.id }}</span>
-			<p class="text-right m-0">작성일 : {{ post.createdAt }}</p>
+			<div class="d-flex justify-content-between mb-3">
+				<span>글번호 : {{ post.id }}</span>
+				<span>작성일 : {{ post.createdAt }}</span>
+			</div>
 			<h3>{{ post.title }}</h3>
 			<p class="mt-3 mb-4">{{ post.content }}</p>
 		</div>

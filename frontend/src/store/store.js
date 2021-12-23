@@ -5,7 +5,10 @@ const store = createStore({
 	state: {
 		posts: [],
 		post: {},
-		page: 1,
+		totalPosts: 0,
+		limitPosts: 0,
+		currentPage: 1,
+		totalPages: 0,
 		loadingStatus: false
 	},
 	getters: {
@@ -34,9 +37,12 @@ const store = createStore({
 		}
 	},
 	actions: {
-		async GET_POSTS({ commit }) {
-			const { data } = await getPosts();
-			commit('SET_POSTS', data);
+		async GET_POSTS({ commit }, page) {
+			const { data } = await getPosts(page);
+			commit('SET_POSTS', data.content);
+			this.state.totalPosts = data.length;
+			this.state.limitPosts = data.limit;
+			this.state.totalPages = Math.ceil(data.length / data.limit)
 		},
 		async GET_POST({ commit }, postId) {
 			const { data } = await getPost(postId);

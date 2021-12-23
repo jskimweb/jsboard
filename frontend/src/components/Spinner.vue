@@ -33,12 +33,14 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgba(255, 255, 255, .5);
+		z-index: 10;
 	}
 
 	.spinner button {
 		position: absolute;
 		left: 50%;
-		bottom: 5%;
-		transform: translateX(-50%);
+		top: 50%;
+		transform: translate(-50%, -50%);
+		opacity: 1;
 	}
 </style>

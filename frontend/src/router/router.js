@@ -19,7 +19,7 @@ const router = createRouter({
 			component: Post,
 			beforeEnter: (to, from, next) => {
 				store.commit('startSpinner');
-				store.dispatch('GET_POSTS').then(() => {
+				store.dispatch('GET_POSTS', store.state.currentPage).then(() => {
 					store.commit('endSpinner');
 					next();
 				}).catch(err => {
