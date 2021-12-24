@@ -42,7 +42,7 @@ const store = createStore({
 			commit('SET_POSTS', data.content);
 			this.state.totalPosts = data.length;
 			this.state.limitPosts = data.limit;
-			this.state.totalPages = Math.ceil(data.length / data.limit)
+			this.state.totalPages = Math.ceil(data.length / data.limit);
 		},
 		async GET_POST({ commit }, postId) {
 			const { data } = await getPost(postId);

@@ -1,9 +1,13 @@
 <template>
-	<div class="container mt-4 mb-4">
-		<form @submit.prevent="submitForm" class="form-group d-flex mb-4">
+	<div class="container mt-3 mb-4">
+		<form @submit.prevent="submitForm" class="form-group d-flex mb-3">
 			<input v-model="searchText" type="text" class="form-control" id="search" name="search" placeholder="검색어를 입력해주세요.">
-			<button type="submit" class="btn btn-success ml-2" style="white-space: nowrap;">검색</button>
-			<button @click="clickWrite" type="button" class="btn btn-primary ml-2" style="white-space: nowrap;">작성</button>
+			<button type="submit" class="btn btn-success ml-2" style="white-space: nowrap;">
+				<i class="bi bi-search"></i>
+			</button>
+			<button @click="clickWrite" type="button" class="btn btn-primary ml-2" style="white-space: nowrap;">
+				<i class="bi bi-pencil-square"></i>
+			</button>
 		</form>
 		<div class="category mb-3 pt-1 pb-1">
 			<span class="ml-2 text-align-center">글번호</span>

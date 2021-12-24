@@ -1,48 +1,46 @@
 <template>
-	<div class="container mt-4">
-		<div class="post-contents">
-			<div class="d-flex justify-content-between mb-3">
-				<span>글번호 : {{ post.id }}</span>
-				<span>작성일 : {{ post.createdAt }}</span>
+	<div>
+		<div class="container mt-4">
+			<div class="post-contents">
+				<div class="d-flex justify-content-between mb-3">
+					<span>글번호 : {{ post.id }}</span>
+					<span>작성일 : {{ post.createdAt }}</span>
+				</div>
+				<h3>{{ post.title }}</h3>
+				<p class="mt-3 mb-4">{{ post.content }}</p>
 			</div>
-			<h3>{{ post.title }}</h3>
-			<p class="mt-3 mb-4">{{ post.content }}</p>
+			<div class="button-group d-flex justify-content-end mt-3">
+				<button @click="clickEdit" class="btn btn-success mr-2">수정</button>
+				<button @click="modalStatus = true" type="button" class="btn btn-danger mr-2">삭제</button>
+				<button @click="clickList" type="button" class="btn btn-light">목록으로</button>
+			</div>
 		</div>
-		<div class="button-group d-flex justify-content-end mt-3">
-			<button @click="clickEdit" class="btn btn-success mr-2">수정</button>
-			<button @click="clickDelete" type="button" class="btn btn-danger mr-2">삭제</button>
-			<button @click="clickList" type="button" class="btn btn-light">목록으로</button>
-		</div>
+		<DeleteModal @closeModal="modalStatus = false" v-if="modalStatus"></DeleteModal>
 	</div>
 </template>
 
 <script>
-	import { computed } from 'vue'
+	import { computed, ref } from 'vue'
 	import { useStore } from 'vuex'
 	import { useRoute } from 'vue-router'
-	import { deletePost } from '@/api/api'
 	import router from '@/router/router'
+	import DeleteModal from '@/components/DeleteModal'
 
 	export default {
 		name: 'PostDetail',
+		components: {
+			DeleteModal
+		},
 		setup() {
 			const store = useStore();
 			const route = useRoute();
 			const post = computed(() => {
 				return store.getters.post
 			});
+			const modalStatus = ref(false);
 
 			const clickEdit = () => {
 				router.push(`/edit/${route.params.id}`)
-			}
-			const clickDelete = async () => {
-				try {
-					const postId = route.params.id;
-					await deletePost(postId)
-						.then(router.push('/post'));
-				} catch (err) {
-					console.log(err)
-				}
 			}
 			const clickList = () => {
 				router.push('/post')
@@ -50,8 +48,8 @@
 
 			return {
 				post,
+				modalStatus,
 				clickEdit,
-				clickDelete,
 				clickList
 			}
 		}

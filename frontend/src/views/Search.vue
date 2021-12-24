@@ -1,5 +1,5 @@
 <template>
-	<div class="container mt-4">
+	<div class="container mt-3">
 		<h4 class="text-center mb-3">검색 결과</h4>
 		<div class="category mb-3 pt-1 pb-1">
 			<span class="ml-2 text-align-center">글번호</span>

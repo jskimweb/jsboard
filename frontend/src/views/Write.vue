@@ -11,7 +11,7 @@
 				<textarea v-model="postData.content" class="form-control" id="content" name="content" rows="5"></textarea>
 			</div>
 			<div class="button-group d-flex justify-content-end">
-				<button type="submit" class="btn btn-primary mr-2">작성</button>
+				<button type="submit" class="btn btn-primary mr-2">확인</button>
 				<button @click="clickCancel" type="button" class="btn btn-secondary">취소</button>
 			</div>
 		</form>

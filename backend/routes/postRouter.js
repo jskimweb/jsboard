@@ -5,7 +5,7 @@ const PostModel = require('../models/PostModel');
 // Create a post
 router.post('/', async (req, res) => {
 	try {
-		const post = await new PostModel(req.body);
+		const post = await new PostModel(req.body)
 		await post.save();
 	} catch (err) {
 		console.log(err);
@@ -16,11 +16,20 @@ router.post('/', async (req, res) => {
 // Read posts
 router.get('/', async (req, res) => {
 	try {
-		const page = 1;
-		const limitPosts = 100;
-		const skipPosts = (page - 1) * limitPosts;
-		const posts = await PostModel.find().sort({ id: -1 }).skip(skipPosts).limit(limitPosts);
-		res.send(posts);
+		const currentPage = req.query.page;
+		const limitPosts = 10;
+		const skipPosts = (currentPage - 1) * limitPosts;
+		const totalPosts = (await PostModel.find()).length;
+		const posts = await PostModel
+			.find()
+			.sort({ id: -1 })
+			.skip(skipPosts)
+			.limit(limitPosts);
+		res.send({
+			content: posts,
+			length: totalPosts,
+			limit: limitPosts
+		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).send(err);
