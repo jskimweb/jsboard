@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Post from '@/views/Post'
-import PostDetail from '@/views/PostDetail'
-import Write from '@/views/Write'
-import Edit from '@/views/Edit'
-import Search from '@/views/Search'
+import PostPage from '@/views/PostPage'
+import PostDetailPage from '@/views/PostDetailPage'
+import WritePage from '@/views/WritePage'
+import EditPage from '@/views/EditPage'
+import SearchPage from '@/views/SearchPage'
 import store from '@/store/store'
 
 const router = createRouter({
@@ -15,8 +15,8 @@ const router = createRouter({
 		},
 		{
 			path: '/post',
-			name: 'Post',
-			component: Post,
+			name: 'PostPage',
+			component: PostPage,
 			beforeEnter: (to, from, next) => {
 				store.commit('startSpinner');
 				store.dispatch('GET_POSTS', store.state.currentPage).then(() => {
@@ -29,8 +29,8 @@ const router = createRouter({
 		},
 		{
 			path: '/post/:id',
-			name: 'PostDetail',
-			component: PostDetail,
+			name: 'PostDetailPage',
+			component: PostDetailPage,
 			beforeEnter: (to, from, next) => {
 				store.commit('startSpinner');
 				store.dispatch('GET_POST', to.params.id).then(() => {
@@ -43,18 +43,18 @@ const router = createRouter({
 		},
 		{
 			path: '/write',
-			name: 'Write',
-			component: Write
+			name: 'WritePage',
+			component: WritePage
 		},
 		{
 			path: '/edit/:id',
-			name: 'Edit',
-			component: Edit
+			name: 'EditPage',
+			component: EditPage
 		},
 		{
 			path: '/search',
-			name: 'Search',
-			component: Search
+			name: 'SearchPage',
+			component: SearchPage
 		}
 	]
 });

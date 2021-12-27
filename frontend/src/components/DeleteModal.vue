@@ -43,7 +43,7 @@
 				}
 			}
 			const checkPosts = () => {
-				if ((store.state.totalPosts - 1) % store.state.limitPosts === 0) {
+				if (store.state.currentPage !== 1 && (store.state.totalPosts - 1) % store.state.limitPosts === 0) {
 					store.state.currentPage -= 1;
 				}
 			}
@@ -63,7 +63,7 @@
 
 	@media (max-width: 576px) {
 		.modal-dialog {
-			margin: 0 auto;
+			margin: 10%;
 		}
 	}
 </style>

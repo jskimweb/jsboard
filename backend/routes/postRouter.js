@@ -18,7 +18,10 @@ router.get('/', async (req, res) => {
 	try {
 		const currentPage = req.query.page;
 		const limitPosts = 10;
-		const skipPosts = (currentPage - 1) * limitPosts;
+		let skipPosts = 0;
+		if (currentPage !== 1) {
+			skipPosts = (currentPage - 1) * limitPosts
+		}
 		const totalPosts = (await PostModel.find()).length;
 		const posts = await PostModel
 			.find()
