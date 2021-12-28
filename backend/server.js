@@ -5,6 +5,7 @@ const history = require('connect-history-api-fallback');
 const path = require('path');
 const postRouter = require('./routes/postRouter');
 const searchRouter = require('./routes/searchRouter');
+
 require('dotenv').config()
 
 app.use(express.urlencoded({ extended: true }));

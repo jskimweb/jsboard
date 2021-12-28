@@ -25,7 +25,9 @@
 				if (searchText.value.trim() == '') {
 					alert('검색어를 입력해주세요.')
 				} else {
-					await store.dispatch('SEARCH_POSTS', searchText.value)
+					await store.commit('startSpinner');
+					await store.dispatch('SEARCH_POSTS', searchText.value);
+					await store.commit('endSpinner')
 						.then(router.push('/search'));
 				}
 			}

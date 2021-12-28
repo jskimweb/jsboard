@@ -11,11 +11,16 @@ const postSchema = new mongoose.Schema({
 	content: {
 		type: String,
 		required: true,
-		trim: true
+		trim: true,
+		maxlength: 500
+	},
+	timestamp: {
+		type: Date,
+		required: true,
+		default: () => Date.now()
 	}
 }, {
-	versionKey: false,
-	timestamps: true
+	versionKey: false
 });
 
 postSchema.plugin(autoIncrement, {inc_field: 'id'});

@@ -1,15 +1,15 @@
 <template>
 	<div>
 		<div class="category mb-3 pt-1 pb-1">
-			<span class="ml-2 text-align-center">글번호</span>
+			<span class="ml-2 text-align-center" style="white-space: no-wrap">글번호</span>
 			<span class="ml-4">제목</span>
-			<span class="float-right mr-5 pr-5">작성일</span>
+			<span class="float-right mr-5">작성시각</span>
 		</div>
-		<div v-for="post in posts" :key="post.id" class="card">
+		<div v-for="(post, index) in posts" :key="post.id" class="card">
 			<router-link :to="`/post/${ post.id }`" class="card-body pt-2 pb-2">
-				<span class="d-inline-block text-dark text-right mr-3" style="width: 1.5rem">{{ post.id }}</span>
+				<span class="post-id d-inline-block text-dark text-right mr-3">{{ post.id }}</span>
 				<span class="card-title text-dark ml-3">{{ post.title }}</span>
-				<span class="float-right text-dark">{{ post.createdAt }}</span>
+				<span class="float-right text-dark">{{ timestamp[index] }}</span>
 			</router-link>
 		</div>
 	</div>
@@ -18,6 +18,7 @@
 <script>
 	import { computed } from 'vue'
 	import { useStore } from 'vuex'
+	import dayjs from 'dayjs'
 
 	export default {
 		name: 'PostList',
@@ -26,9 +27,15 @@
 			const posts = computed(() => {
 				return store.getters.posts
 			});
+			let timestamp = [];
+			
+			for (let i = 0; i < posts.value.length; i++) {
+				timestamp[i] = dayjs(posts.value[i].timestamp).format('YYYY.MM.DD. hh:mm');
+			}
 
 			return {
-				posts
+				posts,
+				timestamp
 			}
 		}
 	}
@@ -38,5 +45,10 @@
 	.category {
 		border-top: 0.1rem solid rgba(0,0,0,.125);
     border-bottom: 0.1rem solid rgba(0,0,0,.125);
+	}
+
+	.post-id {
+		width: 1.5rem;
+		white-space: nowrap;
 	}
 </style>
