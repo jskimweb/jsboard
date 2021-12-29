@@ -59,6 +59,15 @@
 <style scoped>
 	.modal {
 		display: block;
+		background-color: rgba(0, 0, 0, .25);
+	}
+
+	.modal-dialog {
+		position: absolute;
+		left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+		width: 50vw;
 	}
 
 	@media (max-width: 576px) {

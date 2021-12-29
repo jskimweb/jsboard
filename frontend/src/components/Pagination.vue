@@ -1,5 +1,5 @@
 <template>
-	<ul class="pagination justify-content-center mt-3">
+	<ul class="pagination justify-content-center mt-4">
 		<li :class="{'disabled': currentPage === 1}" class="page-item" style="cursor: pointer">
 			<span @click="movePage(currentPage - 1)" class="page-link">
 				<span aria-hidden="true">&laquo;</span>
@@ -50,4 +50,22 @@
 
 <style scoped>
 
+	.page-link {
+		color: #343a40;
+		border: .1rem solid rgba(0, 0, 0, .5);
+	}
+
+	.page-link:hover {
+		background-color: rgba(0, 0, 0, .1);
+		border-color: #343a40;
+	}
+
+	.page-item.active .page-link {
+		background-color: #343a40;
+		border-color: #343a40;
+	}
+
+	.page-item.disabled .page-link {
+		border-color: rgba(0, 0, 0, .5);
+	}
 </style>

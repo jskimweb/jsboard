@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<div class="category mb-3 pt-1 pb-1">
+		<div class="category pt-1 pb-2">
 			<span class="ml-2 text-align-center" style="white-space: no-wrap">글번호</span>
 			<span class="ml-4">제목</span>
-			<span class="float-right mr-5">작성시각</span>
+			<span class="float-right mr-5 pr-4">작성일</span>
 		</div>
 		<div v-for="(post, index) in posts" :key="post.id" class="card">
 			<router-link :to="`/post/${ post.id }`" class="card-body pt-2 pb-2">
@@ -30,7 +30,7 @@
 			let timestamp = [];
 			
 			for (let i = 0; i < posts.value.length; i++) {
-				timestamp[i] = dayjs(posts.value[i].timestamp).format('YYYY.MM.DD. hh:mm');
+				timestamp[i] = dayjs(posts.value[i].timestamp).format('YYYY.MM.DD. hh:mm A');
 			}
 
 			return {
@@ -43,12 +43,25 @@
 
 <style scoped>
 	.category {
-		border-top: 0.1rem solid rgba(0,0,0,.125);
-    border-bottom: 0.1rem solid rgba(0,0,0,.125);
+    border-bottom: 0.1rem solid rgba(0,0,0,.5);
+	}
+
+	.card {
+		border: none;
+		border-bottom: .1rem solid rgba(0,0,0,.25);
+		border-radius: 0;
+	}
+
+	.card:last-child {
+    border-bottom: 0.1rem solid rgba(0,0,0,.5);
 	}
 
 	.post-id {
 		width: 1.5rem;
 		white-space: nowrap;
+	}
+
+	.card-title {
+		font-weight: 500;
 	}
 </style>

@@ -1,11 +1,11 @@
 <template>
 	<div class="post-contents">
-		<div class="d-flex justify-content-between mb-3">
+		<div class="header d-flex justify-content-between pb-3 mb-3">
 			<span>글번호 : {{ post.id }}</span>
 			<span>{{ timestamp }}</span>
 		</div>
-		<h3>{{ post.title }}</h3>
-		<p class="mt-3 mb-4">{{ post.content }}</p>
+		<h3 class="pt-3 pb-3">{{ post.title }}</h3>
+		<p v-html="postContent" class="mt-3 mb-4"></p>
 	</div>
 </template>
 
@@ -21,16 +21,20 @@
 			const post = computed(() => {
 				return store.getters.post
 			});
-			const timestamp = dayjs(post.value.timestamp).format('YYYY.MM.DD. hh:mm');
+			const timestamp = dayjs(post.value.timestamp).format('YYYY.MM.DD. hh:mm A');
+			const postContent = post.value.content.replaceAll(/(\n|\r\n)/g, '<br>');
 
 			return {
 				post,
-				timestamp
+				timestamp,
+				postContent
 			}
 		}
 	}
 </script>
 
-<style>
-
+<style scoped>
+	.header {
+		border-bottom: 0.1rem solid rgba(0,0,0,.5);
+	}
 </style>

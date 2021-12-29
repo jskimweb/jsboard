@@ -1,10 +1,10 @@
 <template>
-	<form @submit.prevent="submitForm" class="form-group d-flex mb-3">
+	<form @submit.prevent="submitForm" class="form-group d-flex pt-3 pb-3">
 		<input v-model="searchText" type="text" class="form-control" id="search" name="search" placeholder="검색어를 입력해주세요.">
-		<button type="submit" class="btn btn-success ml-2" style="white-space: nowrap;">
+		<button type="submit" class="btn btn-dark ml-2" style="white-space: nowrap;">
 			<i class="bi bi-search"></i>
 		</button>
-		<button @click="clickWrite" type="button" class="btn btn-primary ml-2" style="white-space: nowrap;">
+		<button @click="clickWrite" type="button" class="btn btn-dark ml-2" style="white-space: nowrap;">
 			<i class="bi bi-pencil-square"></i>
 		</button>
 	</form>

@@ -1,9 +1,8 @@
 <template>
-	<div v-if="loading" class="spinner">
-		<button class="btn btn-primary" type="button" disabled>
-			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-			Loading...
-		</button>
+	<div v-if="loading" class="spinner-area">
+		<div class="spinner">
+			<div class="spinner-grow" role="status"></div>
+		</div>
 	</div>
 </template>
 
@@ -26,7 +25,7 @@
 </script>
 
 <style scoped>
-	.spinner {
+	.spinner-area {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -36,11 +35,12 @@
 		z-index: 10;
 	}
 
-	.spinner button {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		opacity: 1;
+	.spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+		display: flex;
+    justify-content: center;
 	}
 </style>

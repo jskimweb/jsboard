@@ -6,7 +6,7 @@
 			<textarea v-model="postData.content" class="form-control" name="content" rows="5"></textarea>
 		</div>
 		<div class="form-group d-flex justify-content-end">
-			<button type="submit" class="btn btn-success mr-2">수정</button>
+			<button type="submit" class="btn btn-dark mr-2">수정</button>
 			<button @click="$router.go(-1)" type="button" class="btn btn-secondary">취소</button>
 		</div>
 	</form>
@@ -40,7 +40,7 @@
 				try {
 					const postId = route.params.id;
 					await updatePost(postId, postData.value)
-						.then(router.push('/post'));
+						.then(router.push(`/post/${postId}`));
 				} catch (err) {
 					console.log(err)
 				}
