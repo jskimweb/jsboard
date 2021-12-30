@@ -2,7 +2,7 @@ import axios from 'axios'
 
 async function getPosts(page) {
 	try {
-		return await axios.get('/api/post', {params: {page: page}})
+		return await axios.get('/api/post', { params: {page: page} })
 	} catch (err) {
 		console.log(err)
 	}

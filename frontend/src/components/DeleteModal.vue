@@ -68,11 +68,6 @@
     top: 50%;
     transform: translate(-50%, -50%);
 		width: 50vw;
-	}
-
-	@media (max-width: 576px) {
-		.modal-dialog {
-			margin: 10%;
-		}
+		margin: 0;
 	}
 </style>

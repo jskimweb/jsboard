@@ -2,7 +2,7 @@
 	<div class="container mt-3">
 		<h4 class="text-center mb-3">검색 결과</h4>
 		<PostList></PostList>
-		<p v-if="posts == ''" class="text-center">검색 결과가 없습니다.</p>
+		<p v-if="posts == ''" class="text-center mt-4">검색 결과가 없습니다.</p>
 		<div class="button-group d-flex justify-content-end mt-3">
 			<button @click="clickList" type="button" class="btn btn-light">목록으로</button>
 		</div>

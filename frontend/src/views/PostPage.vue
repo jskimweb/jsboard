@@ -2,7 +2,7 @@
 	<div class="container mt-3 mb-4">
 		<SearchForm></SearchForm>
 		<PostList></PostList>
-		<Pagination></Pagination>
+		<Pagination v-if="$route.name === 'PostPage'"></Pagination>
 	</div>
 </template>
 

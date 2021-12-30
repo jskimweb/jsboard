@@ -26,9 +26,10 @@
 					alert('검색어를 입력해주세요.')
 				} else {
 					await store.commit('startSpinner');
-					await store.dispatch('SEARCH_POSTS', searchText.value);
-					await store.commit('endSpinner')
-						.then(router.push('/search'));
+					await store.dispatch('SEARCH_POSTS', searchText.value).then(() => {
+						store.commit('endSpinner')
+					});
+					await router.push('/search');
 				}
 			}
 			const clickWrite = () => {
