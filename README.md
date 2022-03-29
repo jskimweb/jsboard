@@ -3,10 +3,6 @@
 Vue.js와 Node.js 서버를 연결하여 설계한 API를 통해 서버에 요청을 하면  
 MongoDB에 저장된 데이터를 CRUD 할 수 있는 게시판 웹사이트입니다.
 
-## 배포 링크
-
-https://jskimweb-jsboard.du.r.appspot.com
-
 ## 구현 기능
 
 <ul>
